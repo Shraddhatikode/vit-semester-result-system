@@ -1,0 +1,6 @@
+/* Base reset - Bootstrap and style.css handle layout */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
