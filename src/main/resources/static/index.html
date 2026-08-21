@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIT Student Semester Result Portal</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header class="vit-navbar sticky-top">
+        <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
+            <a href="#" class="vit-brand nav-trigger" data-view="dashboard-view">
+                <div class="vit-badge-logo">VIT</div>
+                <div>
+                    <h1 class="vit-brand-title">VIT RESULT PORTAL</h1>
+                    <p class="vit-brand-subtitle">Vishwakarma Institute of Technology, Pune</p>
+                </div>
+            </a>
+
+            <ul class="nav nav-pills my-2 my-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link vit-nav-item active" href="#" data-view="dashboard-view">
+                        <i class="bi bi-grid-1x2-fill"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link vit-nav-item" href="#" data-view="prepare-view">
+                        <i class="bi bi-file-earmark-plus-fill"></i> Prepare Result
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link vit-nav-item" href="#" data-view="search-view">
+                        <i class="bi bi-search"></i> Search Result
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link vit-nav-item" href="#" data-view="students-view">
+                        <i class="bi bi-people-fill"></i> All Students
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+        <div class="container-fluid px-lg-4">
+
+            <!-- 1. DASHBOARD VIEW -->
+            <section id="dashboard-view" class="view-section active">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 class="fw-bold mb-1">Semester Result Dashboard</h2>
+                        <p class="text-muted mb-0">Overview of student academic performance and results statistics.</p>
+                    </div>
+                    <button class="btn btn-primary d-flex align-items-center gap-2 nav-trigger" data-view="prepare-view">
+                        <i class="bi bi-plus-lg"></i> Prepare New Result
+                    </button>
+                </div>
+
+                <!-- Stats Cards Row -->
+                <div class="row g-4 mb-4">
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="stat-card blue">
+                            <div class="stat-icon-box">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="stat-value" id="stat-total-students">0</div>
+                            <div class="stat-label">Total Students Enrolled</div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="stat-card amber">
+                            <div class="stat-icon-box">
+                                <i class="bi bi-journal-check"></i>
+                            </div>
+                            <div class="stat-value" id="stat-total-results">0</div>
+                            <div class="stat-label">Total Results Generated</div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="stat-card purple">
+                            <div class="stat-icon-box">
+                                <i class="bi bi-graph-up-arrow"></i>
+                            </div>
+                            <div class="stat-value" id="stat-avg-sgpa">0.00</div>
+                            <div class="stat-label">Average SGPA Score</div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="stat-card green">
+                            <div class="stat-icon-box">
+                                <i class="bi bi-trophy"></i>
+                            </div>
+                            <div class="stat-value" id="stat-pass-percentage">0%</div>
+                            <div class="stat-label">Pass Percentage</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Details Row -->
+                <div class="row g-4">
+                    <!-- Recent Students Table -->
+                    <div class="col-12 col-xl-8">
+                        <div class="vit-card">
+                            <div class="vit-card-header">
+                                <h3 class="vit-card-title">
+                                    <i class="bi bi-clock-history text-primary"></i> Recent Result Submissions
+                                </h3>
+                                <button class="btn btn-sm btn-outline-primary nav-trigger" data-view="students-view">
+                                    View All Students
+                                </button>
+                            </div>
+                            <div class="vit-card-body p-0 table-responsive">
+                                <table class="table vit-table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>PRN</th>
+                                            <th>Student Name</th>
+                                            <th>Branch</th>
+                                            <th>Semester</th>
+                                            <th>SGPA</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-students-tbody">
+                                        <tr>
+                                            <td colspan="7" class="text-center py-4 text-muted">
+                                                <div class="spinner-border spinner-border-sm me-2 text-primary" role="status"></div> Loading recent records...
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side Stats & Quick Info -->
+                    <div class="col-12 col-xl-4">
+                        <div class="vit-card mb-4">
+                            <div class="vit-card-header">
+                                <h3 class="vit-card-title">
+                                    <i class="bi bi-pie-chart text-primary"></i> Pass vs Fail Summary
+                                </h3>
+                            </div>
+                            <div class="vit-card-body">
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="fw-semibold text-success"><i class="bi bi-check-circle-fill"></i> Passed Students</span>
+                                        <span class="fw-bold" id="pass-count">0</span>
+                                    </div>
+                                    <div class="progress" style="height: 10px;">
+                                        <div id="pass-bar" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="fw-semibold text-danger"><i class="bi bi-x-circle-fill"></i> Failed Students</span>
+                                        <span class="fw-bold" id="fail-count">0</span>
+                                    </div>
+                                    <div class="progress" style="height: 10px;">
+                                        <div id="fail-bar" class="progress-bar bg-danger" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grade System Card -->
+                        <div class="vit-card">
+                            <div class="vit-card-header">
+                                <h3 class="vit-card-title">
+                                    <i class="bi bi-award text-primary"></i> Grading Scheme Rules
+                                </h3>
+                            </div>
+                            <div class="vit-card-body p-0">
+                                <ul class="list-group list-group-flush small">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>90 – 100 Marks</span>
+                                        <span class="badge grade-badge grade-O">Grade O (Point: 10)</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>80 – 89 Marks</span>
+                                        <span class="badge grade-badge grade-A-plus">Grade A+ (Point: 9)</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>70 – 79 Marks</span>
+                                        <span class="badge grade-badge grade-A">Grade A (Point: 8)</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>60 – 69 Marks</span>
+                                        <span class="badge grade-badge grade-B-plus">Grade B+ (Point: 7)</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>50 – 59 Marks</span>
+                                        <span class="badge grade-badge grade-B">Grade B (Point: 6)</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>40 – 49 Marks</span>
+                                        <span class="badge grade-badge grade-C">Grade C (Point: 5)</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>Below 40 Marks</span>
+                                        <span class="badge grade-badge grade-F">Grade F (Point: 0)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. PREPARE RESULT VIEW -->
+            <section id="prepare-view" class="view-section">
+                <div class="mb-4">
+                    <h2 class="fw-bold mb-1" id="form-header-title">Prepare Student Semester Result</h2>
+                    <p class="text-muted mb-0">Input student details and subject marks (MSE out of 30, ESE out of 100). Final result is computed by Spring Boot backend.</p>
+                </div>
+
+                <form id="result-form" class="needs-validation" novalidate>
+                    <input type="hidden" id="edit-student-id" value="">
+
+                    <!-- Student Details Card -->
+                    <div class="vit-card mb-4">
+                        <div class="vit-card-header">
+                            <h3 class="vit-card-title">
+                                <i class="bi bi-person-lines-fill text-primary"></i> Student Information
+                            </h3>
+                        </div>
+                        <div class="vit-card-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="prn-input" class="form-label">PRN (Permanent Registration No.) *</label>
+                                    <input type="text" class="form-control" id="prn-input" placeholder="e.g. 22110045" required>
+                                    <div class="invalid-feedback">Please provide a valid PRN.</div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="name-input" class="form-label">Full Student Name *</label>
+                                    <input type="text" class="form-control" id="name-input" placeholder="e.g. Rahul Sharma" required>
+                                    <div class="invalid-feedback">Student name is required.</div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="branch-select" class="form-label">Branch / Department *</label>
+                                    <select class="form-select" id="branch-select" required>
+                                        <option value="">Select Branch...</option>
+                                        <option value="Computer Engineering">Computer Engineering</option>
+                                        <option value="Information Technology">Information Technology</option>
+                                        <option value="Artificial Intelligence & DS">Artificial Intelligence & DS</option>
+                                        <option value="Electronics & Telecomm">Electronics & Telecomm</option>
+                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                        <option value="Chemical Engineering">Chemical Engineering</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a branch.</div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="semester-select" class="form-label">Semester *</label>
+                                    <select class="form-select" id="semester-select" required>
+                                        <option value="">Select Semester...</option>
+                                        <option value="1">Semester 1</option>
+                                        <option value="2">Semester 2</option>
+                                        <option value="3">Semester 3</option>
+                                        <option value="4">Semester 4</option>
+                                        <option value="5">Semester 5</option>
+                                        <option value="6">Semester 6</option>
+                                        <option value="7">Semester 7</option>
+                                        <option value="8">Semester 8</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a semester.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Marks Table Card -->
+                    <div class="vit-card mb-4">
+                        <div class="vit-card-header">
+                            <h3 class="vit-card-title">
+                                <i class="bi bi-pencil-square text-primary"></i> Subject Marks Entry (4 Subjects)
+                            </h3>
+                            <span class="badge bg-light text-dark border">Weightage: MSE 30% | ESE 70%</span>
+                        </div>
+                        <div class="vit-card-body p-0 table-responsive">
+                            <table class="table vit-table align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5%;">#</th>
+                                        <th style="width: 15%;">Subject Code</th>
+                                        <th style="width: 30%;">Subject Name</th>
+                                        <th style="width: 10%;">Credits</th>
+                                        <th style="width: 20%;">MSE Marks (0 - 30) *</th>
+                                        <th style="width: 20%;">ESE Marks (0 - 100) *</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Subject 1 -->
+                                    <tr>
+                                        <td class="fw-bold">1</td>
+                                        <td><span class="badge bg-secondary">CS201</span></td>
+                                        <td class="fw-semibold">Data Structures</td>
+                                        <td><span class="badge bg-primary">4</span></td>
+                                        <td>
+                                            <input type="number" step="0.5" min="0" max="30" class="form-control mse-input" id="ds-mse" placeholder="0 - 30" required>
+                                            <div class="invalid-feedback">0 to 30 only</div>
+                                        </td>
+                                        <td>
+                                            <input type="number" step="0.5" min="0" max="100" class="form-control ese-input" id="ds-ese" placeholder="0 - 100" required>
+                                            <div class="invalid-feedback">0 to 100 only</div>
+                                        </td>
+                                    </tr>
+                                    <!-- Subject 2 -->
+                                    <tr>
+                                        <td class="fw-bold">2</td>
+                                        <td><span class="badge bg-secondary">CS202</span></td>
+                                        <td class="fw-semibold">Database Management Systems</td>
+                                        <td><span class="badge bg-primary">4</span></td>
+                                        <td>
+                                            <input type="number" step="0.5" min="0" max="30" class="form-control mse-input" id="dbms-mse" placeholder="0 - 30" required>
+                                            <div class="invalid-feedback">0 to 30 only</div>
+                                        </td>
+                                        <td>
+                                            <input type="number" step="0.5" min="0" max="100" class="form-control ese-input" id="dbms-ese" placeholder="0 - 100" required>
+                                            <div class="invalid-feedback">0 to 100 only</div>
+                                        </td>
+                                    </tr>
+                                    <!-- Subject 3 -->
+                                    <tr>
+                                        <td class="fw-bold">3</td>
+                                        <td><span class="badge bg-secondary">CS203</span></td>
+                                        <td class="fw-semibold">Operating Systems</td>
+                                        <td><span class="badge bg-primary">4</span></td>
+                                        <td>
+                                            <input type="number" step="0.5" min="0" max="30" class="form-control mse-input" id="os-mse" placeholder="0 - 30" required>
+                                            <div class="invalid-feedback">0 to 30 only</div>
+                                        </td>
+                                        <td>
+                                            <input type="number" step="0.5" min="0" max="100" class="form-control ese-input" id="os-ese" placeholder="0 - 100" required>
+                                            <div class="invalid-feedback">0 to 100 only</div>
+                                        </td>
+                                    </tr>
+                                    <!-- Subject 4 -->
+                                    <tr>
+                                        <td class="fw-bold">4</td>
+                                        <td><span class="badge bg-secondary">CS204</span></td>
+                                        <td class="fw-semibold">Theory of Computation</td>
+                                        <td><span class="badge bg-primary">4</span></td>
+                                        <td>
+                                            <input type="number" step="0.5" min="0" max="30" class="form-control mse-input" id="toc-mse" placeholder="0 - 30" required>
+                                            <div class="invalid-feedback">0 to 30 only</div>
+                                        </td>
+                                        <td>
+                                            <input type="number" step="0.5" min="0" max="100" class="form-control ese-input" id="toc-ese" placeholder="0 - 100" required>
+                                            <div class="invalid-feedback">0 to 100 only</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex flex-wrap gap-3 justify-content-end mb-4">
+                        <button type="button" class="btn btn-outline-secondary px-4" id="btn-reset-form">
+                            <i class="bi bi-arrow-counterclockwise"></i> Reset
+                        </button>
+                        <button type="submit" class="btn btn-primary px-4" id="btn-save-result">
+                            <i class="bi bi-check-circle-fill me-1"></i> Save Result & Generate Sheet
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- 3. RESULT PAGE VIEW (VIT Style Marksheet) -->
+            <section id="result-view" class="view-section">
+                <div class="no-print d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 class="fw-bold mb-1">Official Semester Grade Sheet</h2>
+                        <p class="text-muted mb-0">Generated by Backend Calculation Engine</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-secondary nav-trigger" data-view="dashboard-view">
+                            <i class="bi bi-arrow-left"></i> Dashboard
+                        </button>
+                        <button class="btn btn-primary" onclick="window.print()">
+                            <i class="bi bi-printer-fill"></i> Print Result
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Printable Marksheet Container -->
+                <div class="marksheet-container">
+                    <div class="marksheet-watermark">VISHWAKARMA INSTITUTE</div>
+                    
+                    <div class="marksheet-header">
+                        <div class="d-flex align-items-center justify-content-center gap-3 mb-2">
+                            <div class="vit-badge-logo" style="width: 54px; height: 54px; font-size: 1.5rem; background: #1b365d; color: white;">VIT</div>
+                            <div>
+                                <h2 class="marksheet-title-main">VISHWAKARMA INSTITUTE OF TECHNOLOGY</h2>
+                                <p class="marksheet-subtitle">An Autonomous Institute Affiliated to Savitribai Phule Pune University</p>
+                            </div>
+                        </div>
+                        <div class="marksheet-doc-title">SEMESTER PERFORMANCE STATEMENT</div>
+                    </div>
+
+                    <!-- Student Metadata Banner -->
+                    <div class="student-info-grid">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="info-label">PRN</div>
+                                <div class="info-val" id="sheet-prn">-</div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="info-label">Student Name</div>
+                                <div class="info-val" id="sheet-name">-</div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="info-label">Branch</div>
+                                <div class="info-val" id="sheet-branch">-</div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="info-label">Semester</div>
+                                <div class="info-val" id="sheet-semester">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result Breakdown Table -->
+                    <table class="table table-bordered align-middle text-center mb-4">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Subject Code</th>
+                                <th class="text-start">Subject Name</th>
+                                <th>Credits</th>
+                                <th>MSE (/30)</th>
+                                <th>ESE (/100)</th>
+                                <th>Final Marks (/100)</th>
+                                <th>Grade</th>
+                                <th>Grade Point</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sheet-table-body">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+
+                    <!-- Summary Card -->
+                    <div class="marksheet-summary-box mb-4">
+                        <div class="summary-item">
+                            <div class="num" id="sheet-total-marks">0 / 400</div>
+                            <div class="lbl">Total Marks</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="num" id="sheet-sgpa">0.00</div>
+                            <div class="lbl">SGPA (out of 10.0)</div>
+                        </div>
+                        <div class="summary-item">
+                            <div id="sheet-status-badge" class="badge-pass" style="font-size: 1.1rem;">
+                                PASS
+                            </div>
+                            <div class="lbl mt-1">Result Status</div>
+                        </div>
+                    </div>
+
+                    <!-- Official Footer -->
+                    <div class="d-flex justify-content-between align-items-end pt-3 mt-3 border-top">
+                        <div class="small text-muted">
+                            <div>Date of Issue: <span id="sheet-date">-</span></div>
+                            <div>Formula: Final Marks = MSE + (ESE × 0.70) | SGPA = Σ(Credit × GP) / Σ Credits</div>
+                        </div>
+                        <div class="text-center">
+                            <div style="font-family: 'Outfit'; font-weight: 700; color: var(--vit-primary);">CONTROLLER OF EXAMINATIONS</div>
+                            <div class="small text-muted">VIT Pune Academic Authority</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. SEARCH RESULT VIEW -->
+            <section id="search-view" class="view-section">
+                <div class="mb-4">
+                    <h2 class="fw-bold mb-1">Search Student Result</h2>
+                    <p class="text-muted mb-0">Search academic performance record by PRN or Student Name.</p>
+                </div>
+
+                <div class="vit-card mb-4">
+                    <div class="vit-card-body">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-9">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+                                    <input type="text" id="search-input" class="form-control form-control-lg" placeholder="Type PRN (e.g. 22110045) or Student Name...">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <button class="btn btn-primary btn-lg w-100" id="btn-search-trigger">
+                                    Search Records
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Results Output -->
+                <div class="vit-card">
+                    <div class="vit-card-header">
+                        <h3 class="vit-card-title">Search Results</h3>
+                    </div>
+                    <div class="vit-card-body p-0 table-responsive">
+                        <table class="table vit-table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>PRN</th>
+                                    <th>Student Name</th>
+                                    <th>Branch</th>
+                                    <th>Semester</th>
+                                    <th>SGPA</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="search-results-tbody">
+                                <tr>
+                                    <td colspan="7" class="text-center py-4 text-muted">Enter PRN or Name above to search...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. ALL STUDENTS VIEW -->
+            <section id="students-view" class="view-section">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 class="fw-bold mb-1">All Student Records</h2>
+                        <p class="text-muted mb-0">List of all registered students with calculated results.</p>
+                    </div>
+                    <button class="btn btn-primary nav-trigger" data-view="prepare-view">
+                        <i class="bi bi-plus-circle-fill"></i> Add Student
+                    </button>
+                </div>
+
+                <div class="vit-card">
+                    <div class="vit-card-header d-flex flex-wrap gap-3 align-items-center justify-content-between">
+                        <h3 class="vit-card-title">Registered Students Database</h3>
+                        <div class="d-flex gap-2" style="max-width: 350px;">
+                            <input type="text" id="filter-students-input" class="form-control form-control-sm" placeholder="Filter by Name/PRN...">
+                        </div>
+                    </div>
+                    <div class="vit-card-body p-0 table-responsive">
+                        <table class="table vit-table align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th># ID</th>
+                                    <th>PRN</th>
+                                    <th>Student Name</th>
+                                    <th>Branch</th>
+                                    <th>Semester</th>
+                                    <th>Total Marks</th>
+                                    <th>SGPA</th>
+                                    <th>Status</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-students-tbody">
+                                <tr>
+                                    <td colspan="9" class="text-center py-4 text-muted">
+                                        <div class="spinner-border spinner-border-sm me-2 text-primary" role="status"></div> Loading student list...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Toast Notification Popup Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="toast-message">
+                    Notification message
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS App -->
+    <script src="js/app.js"></script>
+</body>
+</html>

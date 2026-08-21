@@ -1,0 +1,450 @@
+/* VIT Student Semester Result Preparation System - Custom CSS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
+
+:root {
+    --vit-primary: #1b365d;
+    --vit-primary-dark: #0f2240;
+    --vit-secondary: #0066cc;
+    --vit-accent: #ffb703;
+    --vit-success: #10b981;
+    --vit-danger: #ef4444;
+    --vit-warning: #f59e0b;
+    --vit-info: #3b82f6;
+    --vit-bg-light: #f4f7fb;
+    --vit-card-bg: #ffffff;
+    --vit-text-dark: #1e293b;
+    --vit-text-muted: #64748b;
+    --vit-border-color: #e2e8f0;
+    --vit-shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --vit-shadow-md: 0 4px 12px rgba(27,54,93,0.08);
+    --vit-shadow-lg: 0 10px 25px rgba(27,54,93,0.12);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--vit-bg-light);
+    color: var(--vit-text-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6, .brand-font {
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Header & Navbar */
+.vit-navbar {
+    background: linear-gradient(135deg, var(--vit-primary-dark) 0%, var(--vit-primary) 100%);
+    box-shadow: var(--vit-shadow-md);
+    padding: 0.75rem 1.5rem;
+}
+
+.vit-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.vit-badge-logo {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+    color: var(--vit-primary);
+    font-weight: 800;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+.vit-brand-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+    margin: 0;
+}
+
+.vit-brand-subtitle {
+    font-size: 0.725rem;
+    color: var(--vit-accent);
+    margin: 0;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.nav-link.vit-nav-item {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    padding: 0.6rem 1rem !important;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-link.vit-nav-item:hover, 
+.nav-link.vit-nav-item.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.nav-link.vit-nav-item.active {
+    border-bottom: 3px solid var(--vit-accent);
+}
+
+/* Container & Views */
+.main-wrapper {
+    flex: 1;
+    padding: 2rem 0;
+}
+
+.view-section {
+    display: none;
+    animation: fadeIn 0.35s ease-in-out;
+}
+
+.view-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dashboard Cards */
+.stat-card {
+    background: var(--vit-card-bg);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid var(--vit-border-color);
+    box-shadow: var(--vit-shadow-md);
+    transition: all 0.3s ease;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--vit-shadow-lg);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+}
+
+.stat-card.blue::before { background: var(--vit-secondary); }
+.stat-card.amber::before { background: var(--vit-accent); }
+.stat-card.green::before { background: var(--vit-success); }
+.stat-card.purple::before { background: #8b5cf6; }
+
+.stat-icon-box {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.blue .stat-icon-box { background: rgba(0, 102, 204, 0.1); color: var(--vit-secondary); }
+.amber .stat-icon-box { background: rgba(255, 183, 3, 0.15); color: #d97706; }
+.green .stat-icon-box { background: rgba(16, 185, 129, 0.1); color: var(--vit-success); }
+.purple .stat-icon-box { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
+
+.stat-value {
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--vit-text-dark);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--vit-text-muted);
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+/* Custom Cards */
+.vit-card {
+    background: var(--vit-card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--vit-border-color);
+    box-shadow: var(--vit-shadow-md);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.vit-card-header {
+    background: #ffffff;
+    border-bottom: 1px solid var(--vit-border-color);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.vit-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--vit-primary-dark);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vit-card-body {
+    padding: 1.5rem;
+}
+
+/* Table Styling */
+.vit-table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.vit-table th {
+    background: #f8fafc;
+    color: var(--vit-primary-dark);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.85rem 1rem;
+    border-bottom: 2px solid var(--vit-border-color);
+}
+
+.vit-table td {
+    padding: 0.9rem 1rem;
+    vertical-align: middle;
+    color: var(--vit-text-dark);
+    border-bottom: 1px solid var(--vit-border-color);
+    font-size: 0.925rem;
+}
+
+.vit-table tbody tr:hover {
+    background-color: rgba(241, 245, 249, 0.6);
+}
+
+/* Badges */
+.badge-pass {
+    background-color: #d1fae5;
+    color: #065f46;
+    font-weight: 700;
+    padding: 0.4rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-fail {
+    background-color: #fee2e2;
+    color: #991b1b;
+    font-weight: 700;
+    padding: 0.4rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.grade-badge {
+    padding: 0.3rem 0.65rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.grade-O { background: #dbeafe; color: #1e40af; }
+.grade-A-plus { background: #e0e7ff; color: #3730a3; }
+.grade-A { background: #ecfdf5; color: #065f46; }
+.grade-B-plus { background: #fef3c7; color: #92400e; }
+.grade-B { background: #ffedf7; color: #9d174d; }
+.grade-C { background: #f3f4f6; color: #374151; }
+.grade-F { background: #fee2e2; color: #991b1b; }
+
+/* Form Control Styling */
+.form-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--vit-primary-dark);
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1.5px solid var(--vit-border-color);
+    padding: 0.65rem 0.9rem;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--vit-secondary);
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15);
+}
+
+.form-control.is-invalid {
+    border-color: var(--vit-danger);
+    background-image: none;
+}
+
+/* VIT Official Marksheet Sheet Design */
+.marksheet-container {
+    background: #ffffff;
+    border: 2px solid var(--vit-primary);
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: var(--vit-shadow-lg);
+    position: relative;
+    margin: 0 auto;
+    max-width: 900px;
+}
+
+.marksheet-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 6rem;
+    font-weight: 900;
+    color: rgba(27, 54, 93, 0.03);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.marksheet-header {
+    text-align: center;
+    border-bottom: 3px double var(--vit-primary);
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.marksheet-title-main {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: var(--vit-primary-dark);
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.marksheet-subtitle {
+    font-size: 0.9rem;
+    color: var(--vit-text-muted);
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.marksheet-doc-title {
+    display: inline-block;
+    background: var(--vit-primary);
+    color: #ffffff;
+    padding: 0.35rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+.student-info-grid {
+    background: #f8fafc;
+    border: 1px solid var(--vit-border-color);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--vit-text-muted);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.info-val {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--vit-primary-dark);
+}
+
+.marksheet-summary-box {
+    background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+    border: 1.5px solid var(--vit-border-color);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.summary-item .num {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--vit-primary);
+}
+
+.summary-item .lbl {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--vit-text-muted);
+    font-weight: 600;
+}
+
+/* Toast Container */
+.toast-container {
+    z-index: 9999;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    
+    .vit-navbar, 
+    .no-print,
+    .btn,
+    .toast-container {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        padding: 0 !important;
+    }
+
+    .marksheet-container {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .view-section {
+        display: block !important;
+    }
+}
